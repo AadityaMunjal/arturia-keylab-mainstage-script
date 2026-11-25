@@ -2,7 +2,7 @@
 
 Fixes for Arturia's MainStage integration script for the **KeyLab 49 / 61 / 88 mk3**. Out of the box, the KeyLab screen shows your patch names but the keyboard can't change patches. This repo fixes that, and optionally adds value popups on the KeyLab screen when you touch or move a fader or knob.
 
-Tested on a KeyLab 61 mk3 with MainStage 4.3.1 (Arturia script v1.4). The 49 and 88 use the identical script apart from the model name, so the same patches apply, but they haven't been tested on hardware yet. Reports are welcome.
+Tested on a KeyLab 61 mk3 with MainStage 4.3.1 (Arturia script v1.4). The 49 and 88 use the identical script apart from the model name, so the same changes apply, but they haven't been tested on hardware yet. Reports are welcome.
 
 ## Pick a version
 
@@ -20,23 +20,26 @@ Tested on a KeyLab 61 mk3 with MainStage 4.3.1 (Arturia script v1.4). The 49 and
 
 ## Install
 
-1. Install Arturia's MainStage integration (Arturia Software Center). It puts the scripts in
-   `~/Music/Audio Music Apps/MIDI Device Profiles/Arturia/`.
-2. Quit MainStage.
-3. Download this repo and run, in Terminal:
+Quit MainStage first.
 
-   ```sh
-   cd keylab-mk3-mainstage
-   ./install.sh essentials      # or: ./install.sh full
-   ```
+**By hand:** copy the folder for your keyboard, e.g. `full/KeyLab 61 mk3.device`, into
 
-   Add a model number to patch just one keyboard: `./install.sh full 61`.
+```
+~/Music/Audio Music Apps/MIDI Device Profiles/Arturia/
+```
 
-4. Start MainStage and create a **new concert** (see below).
+replacing the folder that's already there, if any. (In Finder, press ⌘⇧G and paste the path.)
 
-On the first install, the installer copies Arturia's original file to `~/Documents/KeyLab mk3 MainStage backup/`. To switch versions, run `install.sh` again with the other tier. To go back to Arturia's original, run `./uninstall.sh`.
+**Or with the installer:** download this repo, then run in Terminal:
 
-The repo ships patches rather than complete files, because the script itself belongs to Arturia. The installer applies them to the copy already on your Mac.
+```sh
+cd keylab-mk3-mainstage
+./install.sh essentials      # or: ./install.sh full
+```
+
+Add a model number to install just one keyboard: `./install.sh full 61`. If a script is already installed, for example Arturia's own, the installer first saves it to `~/Documents/KeyLab mk3 MainStage backup/`. `./uninstall.sh` puts it back. To switch versions, run `install.sh` again with the other one.
+
+Then start MainStage and create a **new concert** (see below).
 
 ## Old concerts vs new concerts
 
@@ -59,13 +62,13 @@ The easiest route is a new concert: import your old sets via *File → Import �
 - **SET sync:** the original guessed the scroll direction from which button was pressed. That breaks when assignments differ, or when you change patch with the mouse. The patched version works it out from the actual set/patch index change.
 - **Popups:** MainStage calls `controller_midi_out(midiEvent, name, valueString)` whenever a mapped parameter changes. The script stores the latest name/value per control. When the control is touched (the KeyLab sends an NRPN: CC99 = 0, CC98 = control, CC6 = 127 / 0), the script draws it with Arturia's screen SysEx (`F0 00 20 6B 7F 42 00 02 04 1D …` for faders, `… 1C …` for knobs). Drawing goes through `settriggertimer`, so fast moves only redraw the latest value. MainStage keeps a single pending timer and ignores timers set from inside `controller_timer_trigger`; the code is built around both.
 
-`dev/check.py` runs the patched script in a Lua 5.2 sandbox that simulates MainStage's callbacks and timer:
+`dev/check.py` runs a script in a Lua 5.2 sandbox that simulates MainStage's callbacks and timer:
 
 ```sh
 pip install lupa
-python3 dev/check.py "path/to/patched/config.lua" full
+python3 dev/check.py "full/KeyLab 61 mk3.device/config.lua" full
 ```
 
 ## License
 
-The patches, scripts and docs in this repo are MIT licensed (see `LICENSE`). Arturia's original script is © 2023 Farès Mezdour / Arturia and isn't included. This project isn't affiliated with Arturia or Apple.
+The `config.lua` files are modified versions of Arturia's KeyLab mk3 MainStage script v1.4, © 2023 Farès Mezdour / Arturia. The original copyright notice is kept in each file. My changes, the installer and the docs are MIT licensed (see `LICENSE`). This project isn't affiliated with Arturia or Apple. If you're from Arturia and want something changed, please open an issue.
