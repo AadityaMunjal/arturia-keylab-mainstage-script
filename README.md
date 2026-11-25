@@ -33,7 +33,7 @@ replacing the folder that's already there, if any. (In Finder, press ⌘⇧G and
 **Or with the installer:** download this repo, then run in Terminal:
 
 ```sh
-cd keylab-mk3-mainstage
+cd arturia-keylab-mainstage-script
 ./install.sh essentials      # or: ./install.sh full
 ```
 

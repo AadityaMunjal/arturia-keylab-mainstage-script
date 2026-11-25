@@ -36,7 +36,7 @@ for m in $MODELS; do
   fi
 
   # Keep whatever was there before the first install (unless it is one of ours)
-  if [ -f "$dev/config.lua" ] && [ ! -f "$saved" ] && ! grep -q "keylab-mk3-mainstage" "$dev/config.lua"; then
+  if [ -f "$dev/config.lua" ] && [ ! -f "$saved" ] && ! grep -q "arturia-keylab-mainstage-script" "$dev/config.lua"; then
     mkdir -p "$(dirname "$saved")"
     cp "$dev/config.lua" "$saved"
     echo "KeyLab $m mk3: previous script saved to $saved"

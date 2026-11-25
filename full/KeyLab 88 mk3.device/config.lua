@@ -3,8 +3,8 @@
 --- Version:	1.4
 
 --- Copyright (c) 2023 Farès MEZDOUR
---- Modified by AadityaMunjal (keylab-mk3-mainstage, 'full' version):
---- https://github.com/AadityaMunjal/keylab-mk3-mainstage
+--- Modified by AadityaMunjal (arturia-keylab-mainstage-script, 'full' version):
+--- https://github.com/AadityaMunjal/arturia-keylab-mainstage-script
 
 F_Button1 = {5, nil, nil, nil, nil, nil, nil, nil, nil}
 F_Button2 = {6, nil, nil, nil, nil, nil, nil, nil, nil}
